@@ -16,9 +16,13 @@
 //= require_tree .
 
 jQuery(document).ready(function() {
+  console.log('ready');
   var source = new EventSource('/messages/events'),
       message;
+      
+  console.log(source);
   source.addEventListener('messages.create', function (e) {
+    console.log(e);
     message = JSON.parse(e.data);
     $("#messages").append($('<li>').text(message.name + ': ' + message.content));
   });

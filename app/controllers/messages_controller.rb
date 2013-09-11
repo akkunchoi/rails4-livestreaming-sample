@@ -15,19 +15,24 @@ class MessagesController < ApplicationController
   end
 
   def events
+    $count = 0 if $count.nil?
     response.headers['Content-Type'] = 'text/event-stream'
+
     sse = Streamer::SSE.new(response.stream)
+
+    #redis = Redis.new({host: "127.0.0.1", port: 6379})
     redis = Redis.new
     redis.subscribe('messages.create') do |on|
       on.message do |event, data|
         sse.write(data, event: 'messages.create')
       end
     end
+
     render nothing: true
   rescue IOError
     # Client disconnected
   ensure
-    redis.quit
+    #redis.quit
     sse.close
   end
 end
