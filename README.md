@@ -1,9 +1,12 @@
+Rails4 livestreaming sample
 
+## usage
 
-$ puma
+    $ puma
 
 and go to http://0.0.0.0:9292/
-requires: redis
 
-rainbows doesn't works
+dependencies: redis
+
+Todo: use rainbow
 
